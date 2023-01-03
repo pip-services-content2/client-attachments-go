@@ -25,7 +25,7 @@ func NewAttachmentsClientFixtureV1(client version1.IAttachmentsClientV1) *Attach
 
 func (c *AttachmentsClientFixtureV1) clear() {
 	for _, ref := range []*version1.ReferenceV1{c.REFERENCE1, c.REFERENCE2} {
-		c.Client.DeleteAttachmentById(context.Background(), "", ref.Id)
+		c.Client.RemoveAttachments(context.Background(), "", ref, []string{"1", "2", "3"})
 	}
 }
 
@@ -51,7 +51,7 @@ func (c *AttachmentsClientFixtureV1) TestCrudOperations(t *testing.T) {
 	// Remove reference
 	_, err = c.Client.UpdateAttachments(context.Background(),
 		"123",
-		version1.NewReferenceV1("000000000000000000000011", "goal", ""),
+		c.REFERENCE1,
 		[]string{"1", "2"}, []string{"1"},
 	)
 	assert.Nil(t, err)
@@ -59,7 +59,7 @@ func (c *AttachmentsClientFixtureV1) TestCrudOperations(t *testing.T) {
 	// Remove another reference
 	_, err = c.Client.RemoveAttachments(context.Background(),
 		"123",
-		version1.NewReferenceV1("000000000000000000000011", "goal", ""),
+		c.REFERENCE1,
 		[]string{"1"},
 	)
 	assert.Nil(t, err)

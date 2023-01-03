@@ -47,7 +47,7 @@ func (c *AttachmentsCommandableHttpClientV1) teardown(t *testing.T) {
 	c.client.Close(context.Background(), "")
 }
 
-func TestHttpCrudOperations(t *testing.T) {
+func TestCommandableHttpCrudOperations(t *testing.T) {
 	c := newAttachmentsCommandableHttpClientV1()
 	fixture := c.setup(t)
 	defer c.teardown(t)
