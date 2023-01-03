@@ -16,9 +16,11 @@ func NewAttachmentsClientFactory() *AttachmentsClientFactory {
 	}
 
 	nullClientDescriptor := cref.NewDescriptor("service-attachments", "client", "null", "*", "1.0")
+	mockClientDescriptor := cref.NewDescriptor("service-attachments", "client", "mock", "*", "1.0")
 	cmdHttpClientDescriptor := cref.NewDescriptor("service-attachments", "client", "commandable-http", "*", "1.0")
 
 	c.RegisterType(nullClientDescriptor, clients1.NewAttachmentsNullClientV1)
+	c.RegisterType(mockClientDescriptor, clients1.NewAttachmentsMockClientV1)
 	c.RegisterType(cmdHttpClientDescriptor, clients1.NewAttachmentsCommandableHttpClientV1)
 
 	return c
