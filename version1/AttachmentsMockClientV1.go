@@ -42,7 +42,11 @@ func (c *AttachmentsMockClientV1) addReference(ctx context.Context, correlationI
 	if item != nil {
 		for i, ref := range item.References {
 			if ref.Id == reference.Id && ref.Type == reference.Type {
-				c.attachments = append(c.attachments[:i], c.attachments[i+1:]...)
+				if i < len(c.attachments) {
+					c.attachments = append(c.attachments[:i], c.attachments[i+1:]...)
+				} else {
+					c.attachments = c.attachments[:i]
+				}
 			}
 		}
 
@@ -179,7 +183,11 @@ func (c *AttachmentsMockClientV1) removeReference(ctx context.Context, correlati
 	if item != nil {
 		for i, ref := range item.References {
 			if ref.Id == reference.Id && ref.Type == reference.Type {
-				item.References = append(item.References[:i], item.References[i+1:]...)
+				if i < len(c.attachments) {
+					item.References = append(item.References[:i], item.References[i+1:]...)
+				} else {
+					item.References = item.References[:i]
+				}
 			}
 		}
 	}
@@ -193,7 +201,11 @@ func (c *AttachmentsMockClientV1) DeleteAttachmentById(ctx context.Context, corr
 	for index, item := range c.attachments {
 		if item.Id == id {
 			attachment = item
-			c.attachments = append(c.attachments[:index], c.attachments[index+1:]...)
+			if index < len(c.attachments) {
+				c.attachments = append(c.attachments[:index], c.attachments[index+1:]...)
+			} else {
+				c.attachments = c.attachments[:index]
+			}
 			break
 		}
 	}
